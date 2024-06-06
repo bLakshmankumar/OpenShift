@@ -1,0 +1,37 @@
+Running Openshift for local development :
+=========================================
+Prerequisites :
+----------------
+**We need to run a few steps before we can get openshift started.
+1. Virtual Box - If you don't already have it install go to https://www.virtualbox.org/wiki/Downloads and download your OS version.
+2. Docker machine - this is needed for creating the virtual machine for openshift. https://docs.docker.com/machine/install-machine/
+3. oc tool - Download the zip file of OC tool for your system from https://github.com/openshift/origin/releases
+
+## Setup :
+==========
+# Create virtual machine with docker 1.13.1 :
+--------------------------------------------
+docker-machine create --driver virtualbox \
+--engine-insecure-registry 172.30.0.0/16 \
+--virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso \
+my-docker-machine
+
+# Run the oc create command to bring the cluster up :
+-----------------------------------------------------
+oc cluster up --metrics=false --create-machine=false \
+--docker-machine='my-docker-machine'
+
+-- Checking OpenShift client ... ok
+---
+-- Server Information...
+   OpenShift server started.
+   The server is accessible via web console at:
+    https://192.168.99.190:9567
+ Your loged in as :
+     User: ops
+     Password: ops
+To login as a administrator :
+    oc login -u system:admin
+
+# Point your browser to https://192.168.88.180:9567/ and login with ops:ops
+It will redirects to openshift dashboard
