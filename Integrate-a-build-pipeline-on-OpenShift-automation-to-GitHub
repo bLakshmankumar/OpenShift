@@ -1,5 +1,25 @@
-# Set up webhook setup for auto build trigger on openshift : 
-============================================================
+# How to trigger a build manually in Openshift :
+================================================
+> Go to Openshift UI
+> Go to your projects and choose your project
+> Go to builds option and chose build
+> If you want to trigger a build manually, Then choose a "Start Build" option from the top right corner. It'll trigger a fresh build.
+
+# Where to see my build logs and details of my build on openshift UI :
+======================================================================
+> Go to Openshift UI
+> Go to your projects and choose your project
+> Go to builds option and chose build
+> Click on one of the build and you can see build details(Like status of the build, build configuration details and etc).
+> We can check the build logs and events by choose those tabs.
+> If you want to restart the same build again, Choose "rebuild" option on top right side inside the build
+
+# Command to trigger a build manually :
+========================================
+> oc start-build build-name -n ns
+
+# Set up GitHub webhook setup for auto build trigger on openshift : 
+===================================================================
 Step : 1
 --------
 > Go to your openshift UI
@@ -22,4 +42,38 @@ Note :
 -------
 Howere that git hub is able to access OpenShift using the IP address in the URL, If you are using the public GitHub and openshift on private network This will most likely not work. 
 Both instances should be in a same network. Accessible to each other.
+
+
+# How to generate the webhook manually for gitlab or github [If you don't see any GitLab or Github webhook url under build trigger section] :
+=============================================================================================================================================
+If Gitlab or GitHub webhook url options are not visible under the Triggers section, Please do follow these below steps to enable them.
+Here i wanna enable webhook configuration for GitLab but i am unable to see this gitlab webhook url under triggers section inside builds.
+So How to generate the Webhook for GitLab specifically :
+--------------------------------------------------------
+    > Inside builds, Go to configuartion (if you don't see gitlab webhook url under triggers section here) Then,
+    > Choose "Actions" on top right corner,
+    > Choose Edit, It'll open a new page
+    > Choose Advanced options
+    > Go to triggers section
+    > Click on add webhook,
+    > Choose the webhook type as gitlab from showing list.
+    > Choose the webhook secret referrence [If you don't have any webhook secretkey, Then create a new secret key by clicking on "create a new webhook secret"(provide name and choose generate, It'll create a webhook secret key)]
+    > Now go back to your build and go to configuration, Now you can see the GitLab webhook URl under triggers section.
+
+# Set up GitLab webhook setup for auto build trigger on openshift : 
+===================================================================
+     In above we generate the Webhook for GitLab specifically right, Now we will  Set up GitLab webhook setup for auto build trigger on openshift.
+     > Now copy the "GitLab webhook URl" 
+     > Go to Git lab
+     > Go to your repository
+     > Choose settings under repository
+     > Choose integrations
+     > Paste the copied "GitLab webhook URl" from OpenShift under URL field. 
+         Note : The secret token is already a part of the URL So, it's not required to be specified seperately, We will watch for all the push events for now.
+                 And for testing perpose if in your local please "unselect the Enable ssl verificatio" under ssl verification option.
+     > Choose add webhook in dropdown. [Now wenhook has been added].
+     > Click on "test" option here
+     > Choose push events
+     
+    
 
