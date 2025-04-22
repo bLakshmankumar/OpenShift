@@ -14,4 +14,12 @@ Step : 2
 > Go to your code repo
 > Go to settings
 > Choose webhooks tab from left sdie
-> Paste that above copied github webhook url(which we copied from build configuration tab on openshift) under "payload URL" section here.
+> Paste that above copied github webhook url(which we copied from build configuration tab on openshift) under "payload URL" section in github here.
+> That's it.
+
+
+Note : 
+-------
+Howere that git hub is able to access OpenShift using the IP address in the URL, If you are using the public GitHub and openshift on private network This will most likely not work. 
+Both instances should be in a same network. Accessible to each other.
+
