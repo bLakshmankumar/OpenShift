@@ -1,7 +1,7 @@
 # Set up webhook setup for auto build trigger on openshift : 
 ============================================================
 Step : 1
----------
+--------
 > Go to your openshift UI
 > Go to projects & Choose your project
 > Go to build oprion from left side
