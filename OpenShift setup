@@ -1,7 +1,7 @@
 Running Openshift for local development :
 =========================================
 Prerequisites :
-----------------
+---------------
 **We need to run a few steps before we can get openshift started.
 1. Virtual Box - If you don't already have it install go to https://www.virtualbox.org/wiki/Downloads and download your OS version.
 2. Docker machine - this is needed for creating the virtual machine for openshift. https://docs.docker.com/machine/install-machine/
