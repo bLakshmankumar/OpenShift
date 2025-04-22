@@ -1,0 +1,17 @@
+# Set up webhook setup for auto build trigger on openshift : 
+============================================================
+Step : 1
+---------
+> Go to your openshift UI
+> Go to projects & Choose your project
+> Go to build oprion from left side
+> Choose build option
+> Go to configuration option
+> Under the configuration tab, Look for github webhook url, And copy it.(In my case i am using git hub, So i choose github webhook url, Incase if you are using gitlab then choose gitlab webhook url).
+
+Step : 2
+--------
+> Go to your code repo
+> Go to settings
+> Choose webhooks tab from left sdie
+> Paste that above copied github webhook url(which we copied from build configuration tab on openshift) under "payload URL" section here.
