@@ -1,0 +1,92 @@
+# How/Process to deploy a sample app into OpenShift step-by-step :
+# ================================================================
+ Goal:
+✅ Push simple Python app into OpenShift
+✅ Build it using OpenShift BuildConfig
+✅ Deploy it as a pod
+✅ Expose it using OpenShift Route (make it public)
+
+Step 1: Prepare a very simple app :
+-----------------------------------
+Suppose you have this file structure:
+/sample-python-app
+  ├── app.py
+  └── requirements.txt
+
+#app.py:
+#-------
+
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+    return "Hello OpenShift World!"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
+
+# requirements.txt:
+# -----------------
+  Flask
+
+# Step 2: Login to OpenShift :
+------------------------------
+oc login https://<your-openshift-cluster-url> --token=<your-token>
+Now you're authenticated.
+
+# Step 3: Create a new OpenShift project :
+------------------------------------------
+Think of a project like a namespace
+oc new-project my-sample-app
+
+# Step 4: Push the code to GitHub :
+-----------------------------------
+You should push the app to a GitHub repo like:
+https://github.com/your-user/sample-python-app 
+Because OpenShift will pull the source code from Git!
+
+# Step 5: Create a BuildConfig to build your app :
+--------------------------------------------------
+Tell OpenShift:
+  where to pull code
+  what builder image to use
+  where to store the built image
+Command: 
+oc new-app python:3.10-ubi8~https://github.com/your-user/sample-python-app.git --name=hello-openshift
+  👉 What this does:
+     It pulls code from GitHub
+     It uses a Python 3.10 base image
+     It builds a container image
+     It saves it into OpenShift internal registry
+     It creates a deployment automatically
+
+# Step 6: Expose your app to the world :
+----------------------------------------
+Create a Route (like a LoadBalancer or Ingress): 
+   oc expose service hello-openshift
+Now check the route: 
+   oc get route
+It will show you a URL like:
+   http://hello-openshift-my-sample-app.apps.cluster.example.com
+✅ Open it in browser — you will see:
+        Hello OpenShift World!
+
+# Full Flow Visual:
+-------------------
+You Push Code → GitHub
+        ↓
+oc new-app → OpenShift builds container image
+        ↓
+oc expose service → OpenShift creates public URL
+        ↓
+Browser → App Live!
+
+# In just 5 minutes, you:
+=========================
+   Built an image from source code
+   Deployed your app
+   Exposed it to public
+   All managed securely by OpenShift
+
+
