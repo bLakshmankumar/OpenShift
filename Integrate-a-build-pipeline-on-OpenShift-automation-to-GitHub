@@ -89,5 +89,5 @@ Note : When we choose push events we will get a 500 error page for the first tim
        > For testing purpose if in your local please "unselect the Enable ssl verification" under ssl verification option.
        > Click on "test" option here > Choose push events > Now it return http:200 on top of it.
      
-    
-
+  You can do some dummy commit on your repo and go back to your OpenShift UI > Go to your projects > Go to builds > Choose your build > check the latest build.
+  If you click on the build num > You can see the build details (like Triggered by : GitLab webhook, and status and other information.) 
