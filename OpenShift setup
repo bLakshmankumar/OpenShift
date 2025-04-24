@@ -10,7 +10,7 @@ Prerequisites :
 ## Setup :
 ==========
 # Create virtual machine with docker 1.13.1 :
---------------------------------------------
+---------------------------------------------
 docker-machine create --driver virtualbox \
 --engine-insecure-registry 172.30.0.0/16 \
 --virtualbox-boot2docker-url https://github.com/boot2docker/boot2docker/releases/download/v1.13.1/boot2docker.iso \
