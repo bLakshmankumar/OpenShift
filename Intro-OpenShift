@@ -7,7 +7,7 @@ What is OpenShift?
     These manage the whole cluster:
      Component	                         What it does	                              Example
      API Server               Accepts commands (oc or kubectl)	         You create a pod, API Server accepts it
-  Controller Manager             	 Watches and fixes things	             Ensures your pods run as you requested
+  Controller Manager          Watches and fixes things	             Ensures your pods run as you requested
      Scheduler	                  Places new pods on best nodes	         Chooses which server will run your app
        etcd                   Key-Value database to store cluster info	 Cluster configs, pods, secrets, stored here
 2. Node Components (Worker Nodes)
