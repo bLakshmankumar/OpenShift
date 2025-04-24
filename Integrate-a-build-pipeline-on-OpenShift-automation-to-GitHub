@@ -82,7 +82,7 @@ Note : When we choose push events we will get a 500 error page for the first tim
            Go to the admin area on GitLab (example Gitlab-ip/admin)
            Under settings
              > Scroll to the bottom
-             > Go to "Outbound requests" and click on "Expand tab on right side"
+             > Go to "Outbound requests" and click on "Expand tab on right side".
              > ✅ Allow requests to the local network.
              > Save changes.
        > Now click on project on GitLab > Choose your repo > Choose settings > Integrations > check the Pasted the copied "GitLab webhook URl" > Scroll down, 
