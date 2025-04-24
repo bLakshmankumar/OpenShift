@@ -39,7 +39,7 @@ Step : 2
 
 
 Note : 
--------
+------
 Howere that git hub is able to access OpenShift using the IP address in the URL, If you are using the public GitHub and openshift on private network This will most likely not work. 
 Both instances should be in a same network. Accessible to each other.
 
