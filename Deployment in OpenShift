@@ -1,5 +1,5 @@
 # Create deployement in OpenShift :
-# ===================================
+# =================================
   > Go to Openshuft Ui
   > Go to your project 
   > Click on Application tab (We can see one deployment we can see that automatically created when an application was added to the project the first time)
