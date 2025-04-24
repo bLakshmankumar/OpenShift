@@ -34,4 +34,4 @@ To login as a administrator :
     oc login -u system:admin
 
 # Point your browser to https://192.168.88.180:9567/ and login with ops:ops
-It will redirects to openshift dashboard
+It will redirects to openshift dashboard.
