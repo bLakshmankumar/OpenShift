@@ -1,0 +1,64 @@
+# Create deployement in OpenShift :
+# ===================================
+  > Go to Openshuft Ui
+  > Go to your project 
+  > Click on Application tab (We can see one deployment we can see that automatically created when an application was added to the project the first time)
+     In previous we created a new build configuration that generates a Docker Image of our application.
+
+# In this demo we will create a Deployment configuration to deploy the docker image on the Openshift cluster.
+=============================================================================================================
+ While working with the UI, If you need an additional information on any topic, Choose learnmore link it'll redirect to the official doc of OpenShift.
+  Here is the official doc : https://docs.redhat.com/en/documentation/openshift_online/3/html/developer_guide/deployments#cr
+> If you go to abive url, 
+> Here we can see a template configuration file, That can be used to create a new deployment configuration.
+> Copy that yaml & paste it in your vsc, and update the names and image name and tag (which we created previously).
+  Note : you can see the available images under builds > imgaes tab on open shift UI under your project.
+kind: "DeploymentConfig"
+apiVersion: "v1"
+metadata:
+  name: "frontend"
+spec:
+  template: 
+    metadata:
+      labels:
+        name: "frontend"
+    spec:
+      containers:
+        - name: "helloworld"
+          image: "origin-ruby-sample:latest
+          ports:
+            - containerPort: 8080
+              protocol: "TCP"
+  replicas: 5 
+  triggers:
+    - type: "ConfigChange" 
+    - type: "ImageChange" 
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "helloworld"
+        from:
+          kind: "ImageStreamTag"
+          name: "origin-ruby-sample:latest"
+  strategy: 
+    type: "Rolling"
+  paused: false 
+  revisionHistoryLimit: 2 
+  minReadySeconds: 0 
+> And update the triggers as well inside the yaml, The triggers make sure the application is redployed every time a change is made to my Docker image tagged by the image stream.
+  For example when the build job runs and updates my Docker image as a result of a code change. 
+> Once the file ready head back to the OpenShift UI, To create a new deployment configuration.
+> Go to your project
+> Inside the project 
+> Choose Applications 
+> Choose Add to project on top right corner
+> In drop down choose the Import Yaml/Json
+> Paste the content of the file we just created above and click on create.
+
+Now you can see a new deployment configuration inside deployments, Check the state(active or pending).
+> click on the deployment button on top right side, it's a manually triggers a new deployment.
+> If you want to automate the deployment, Then do some changes is repo level, And it'll trigger a new build and update the image and start a new deployment.
+
+Note : So far we haven't done any configuration to access the application externally, We need to configure services and routes for that, and that is what we will look at next.
+
+
