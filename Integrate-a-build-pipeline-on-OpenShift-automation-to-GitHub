@@ -7,9 +7,9 @@
 
 # Where to see my build logs and details of my build on openshift UI :
 ======================================================================
-> Go to Openshift UI
-> Go to your projects and choose your project
-> Go to builds option and chose build
+> Go to Openshift UI.
+> Go to your projects and choose your project.
+> Go to builds option and chose build.
 > Click on one of the build and you can see build details(Like status of the build, build configuration details and etc).
 > We can check the build logs and events by choose those tabs.
 > If you want to restart the same build again, Choose "rebuild" option on top right side inside the build
