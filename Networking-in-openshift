@@ -1,0 +1,36 @@
+Introduction to OpenShift :
+===========================
+Today we will look at networking in OpenShift.
+Let's Quickly recap the basics of networking in k8s so that we can easily relate it to networking in OpenShift.
+  > A k8s cluster, As we know, is composed of a master and worker nodes.
+  > Since each of these are virtual or physical machines, They all have their own IP addresses.
+    > Let's say, 192.168.1.10(Master), 192.168.1.11(Worker1), 192.168.1.12(Worker2), 192.168.1.13(Worker3).
+  > When application is deployed on this cluster in the form of Docker container in Pods, Each pod gets an IP address assigned to it.
+  > Now these pods could be running  different types of applications dependent on each other.
+  > For example, The first one maybe running a web server and the second maybe running a database server.
+    So a fundamental requirement is for the Pods to be able to communicate with each other. For this to happen, The pods must be on a network configured in a way where they can communicate with each other and have unique IP addresses.
+    So, Who is responsble for assigning these ip addresses and managing them ? Making sure each pod gets unique IP address and ensure routes are in place to direct traffic between the differnt worker nodes ?
+       > Openshft solves this problem using the OpenShift software defined Networking. 
+       > The Open shift software defined network creates a virtual network that spans across multiple nodes in the cluster. 
+       > This virtual network is called an overlay network. And is created using the Open vSwitch standard.
+          > Open vSwitch is a distributed virtual switch used to interconnect virtual machine is a Hypervisor.
+          > Some of it's features include VLAN tagging, Trunking, LACP, Port mirroring, & etc.
+       > The default network ID for the overlay network is 10.128.0.0/14. On this network, Each node is addigned a unique subnet, Such as 10.128.0.0 for the first node, 10.128.2.0 for the second node,  10.128.4.0 for the third node.
+       > All pods on these nodes now get a unique IP address within that subnet. 
+       > The web application now has the IP address 10.128.0.5 and the database gets 10.128.2.2
+       > We can see the IP addresses assigned to each POD when you run the "oc get pods -0 wide" command.
+       > The web application can now connect to the database this IP address. 
+       > However, Establising connectivity to another pod with its ip address may not be a good idea. As it's not guaranteed to be the same each time. If the database POD was restarted, It may have a new IP address. For this reason, OpenShift has a built-in DNS server.
+       > The DNS server helps map IP addresses to PODs and services. This enable us to use a POD name or service name to connect to the database instead of IP addresses. 
+       > OpenShift DNS leverages sky DNS to implement DNS functionality on top of ETCD. 
+         Note that establishing connectivity between PODs directly is not recommended.
+       > The recommended way is to use services.
+       > Openshift software defined networking provides different kinds of plugins, The default plugin configured is the ovs-subnet that provides network connectivity between all pods across clusters.
+       > Additionally openshift also supports additional plugins such as "nuagenetworks", "Contiv", And "Flannel". Each of these has it's own way of networking and pros and cons that works best for different requirments.
+    So far, We discussed about overlay networks that facilitate internal communication between PODs and services.
+    But, What about external connectivity ? How can we users access our application ? 
+    ----------------------------------------------------------------------------------
+       That's achived with the help of services and routes,
+
+
+
