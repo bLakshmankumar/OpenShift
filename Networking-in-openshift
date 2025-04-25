@@ -32,5 +32,62 @@ Let's Quickly recap the basics of networking in k8s so that we can easily relate
     ----------------------------------------------------------------------------------
        That's achived with the help of services and routes,
 
+# services concept in Networking :
+==================================
+   We are going to quick recap what services are.
+   If you have gone through the concept of services in k8s, This is the same in OpenShift.
+ We will quickly recap the basics and then, See how we can work with services in OpenShift.
+ -------------------------------------------------------------------------------------------
+   > Services help connect different applications or group of pods with one another.
+   > Instead of relying on the IP Address or DNS name of a POD, it is recommended to use a service as a service acts as a load balancer for each section of our microservices architecture.
+   > For ex : we have front-end -> back-end -> Data processing microservices.
+   > In this case, The front-end talks to the backend thriugh a service. And the back-end talks to a dataprocessing application through a service. 
+   > The front-end can expose our application to the end users, again, through a service.
+   > And in case we need access to an external data stores, Again, It's accomplished with the help of services.
+   > Services provides us with the flexibility of modifying and redeploying the underlying microservices without having to worry about modifying configuartion of other dependent applications.
+   > Each service within Openshift gets it's own IP address and DNS entries, That can be used to establish connectivity from other applications. 
+   > Like pods each service gets an internal IP address assigned, This is called Cluster IP because it is the IP assigned to the service for internal communication within the cluster.
+   > It can be seen in the UI next to the list of services.
+But How are services linked to Pods ?
+--------------------------------------
+   > We link services to the pods by using selectors.
+   > To link the service to all the pods created by the sample-webapp-docker(existing) deployment we use selectors in the deploymentconfig file( like deploymentconfig=sample-webapp-docker(existing deploymentname))
+   > Then we also specify the port on the service to listen to and the target port on the pods to forward the request to.
+   > These can be seen in the user interface under the service details: 
+        > The selector, Service port and target port.
+   > However, We have only linked the service to the backend pods.
+How do we make it accessible to external users ?
+-------------------------------------------------
+   > The users would like to access our application usinga host name like (www.somewebapp.com), That's where routes comming.
+   > A route helps us expose the service to external users through a host name. 
+   > Think of a route as a proxy server, Such as HA proxy or F5. 
+   > We can configure loadbalancing, security, as well as split between services with routes. The route is responsible for balancing load across the diffent pds within the deployment.
+   > In order to do that,  It relies on
+   > Different loadbalancing strategies such as :
+    ---------------------------------------------
+      1. source strategy, 
+      2. Roundrobin strategy,
+      3. leastcinn strategy.
+   1. Source strategy : 
+   --------------------
+      This is the default strategy used. 
+      This source strategy looks at the IP address of the user, accessing the application and make sure that user is always direct to the same back-end server for the duration of that session, Thus providing a sticky session functionality.
+   2. Roundrobin strategy :
+   ------------------------
+      In this strategy, Each request is directed to a seperate back-end pod each time, Even if the requests originate from the same user IP address. 
+   3. leastcinn strategy :
+   -----------------------
+       In this strategy, This routes traffic to the endpoint with the lowest number of connections.
+Security :
+----------
+    > Under the security section, We can configure ssl security, So the web application can be accessed using https. 
+    > Also under the insecure traffic section, Decide whether you would like to allow the users to access your site using http or redirect the users to the https version of the site automatically when they try to access http. 
+    > We may also configure the certificates and private keys in the same section.
+    > Routes also allow us to split traffic between 2 services for A/B testing purposes.
+    > The alternative services section in the UI splits traffic between 2 services in this case. It is as easy as moving the slider in the direction we wish to go based on test results.
+
+
+
+  
 
 
