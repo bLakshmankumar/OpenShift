@@ -37,7 +37,7 @@ Let's Quickly recap the basics of networking in k8s so that we can easily relate
    We are going to quick recap what services are.
    If you have gone through the concept of services in k8s, This is the same in OpenShift.
  We will quickly recap the basics and then, See how we can work with services in OpenShift.
- -------------------------------------------------------------------------------------------
+ ------------------------------------------------------------------------------------------
    > Services help connect different applications or group of pods with one another.
    > Instead of relying on the IP Address or DNS name of a POD, it is recommended to use a service as a service acts as a load balancer for each section of our microservices architecture.
    > For ex : we have front-end -> back-end -> Data processing microservices.
