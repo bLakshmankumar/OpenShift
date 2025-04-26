@@ -52,7 +52,7 @@ metadata:
   name: frontend      
 spec:
   selector:                  
-    docker-registry: default
+    deploymentconfig=frontend
   clusterIP: 172.30.136.123   
   ports:
   - nodePort: 0
