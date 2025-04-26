@@ -87,6 +87,68 @@ Security :
     > The alternative services section in the UI splits traffic between 2 services in this case. It is as easy as moving the slider in the direction we wish to go based on test results.
 
 
-  
+Demo for services and routes :
+==============================
+> In this demo we will look at services and routes. Till now we have now configured build and deployments for our application.
+> The next step is to expose it to other applications or external users. 
+> To Make the application accessible to other applications within the cluster, we create a service.
+> To get a template for the service configuration file, 
+    > Go to openshift UI > Click on applications > choose services tab in options > Click on learn more link.()
+> Copy the yaml config.
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend      
+spec:
+  selector:                  
+    deploymentconfig=frontend # The selctor links the service to the pods hosting the application, You can change this selctor according to your deployment config.
+  clusterIP: 172.30.136.123   # The cluster IP is the IP assigned to the service, During service creation, An IP is assigned automatically, So we will get rid of that line.  
+  ports:                      # The port section defined what port to listen on and what port to forward the traffic to.
+  - nodePort: 0
+    port: 5000               
+    protocol: TCP
+    targetPort: 5000   
+> We know the application listens on 8080, So we use that. Once the file is ready.
+> Go to your Openshift UI
+> Go to your project
+> Go to apllications
+> Choose services
+> Choose add to project
+> Choose import YAML/Json
+> Paste the modified service yaml
+> click on create to create a service.
+> Now, click on the newly created service to view it.
+> We see that is has an IP address assigned to it automatically.
+> Which happens to be 172.30.163.74
+> Click on the newly created service, and now you can see more details about your service(like selector, type, ip, hostname. routes & etc).
+> Now we can access our application through the service using assigned IP in service.
+  > This is, However, an internal cluster IP address which can't be accessed externally.
+  > But let's try to access it internally.
+  > Access the console of the openshift cluster,
+  > And run the curl command using the IP address and port to see the application
+     "curl http://172.20.163.74:8080".
+  > It returns successful output.
+
+# Now we will create a Route to access the application externally :
+===================================================================
+   We can do this using yaml-based method, As we have been doing so far in the demos.
+   > Click on "create a route" option inside your service under routes option.
+   > Clicking on the link takes us to the "create route form" 
+   > Fill in the details (like name, Hostname, path, service, Target port, Alternative services) 
+      > In this example demo we will leaving the hostname blank will generate a hostname for us based on the application name.
+      > A quock note on host names. If you need to use another host name here such as www.example.com, 
+      > You need to make sure that the external DNS is configured to route users to the OpenShift cluster when they try to access the url.
+      > Once they land on OpenShift cluster, The route configured in OpenShift will ensure they are redirected to the right application based on the hostname.
+   > We will leave everything else to default and create the route, Click on create.
+   > Once the route is created we can see the generated hostname.
+   > Click on this hostname link, Takes us to the application on browser.
+
+# Let's run the end to end test now :
+======================================
+   > When we do a change in our code repo, It automatically triggers a new build. 
+   > Once the build is completed (You can see the details on openui dashboard under builds section), A new deployment is triggered.
+   > And once the deployment is complete, The changes code is reflected in the application UI, When the browser is refreshed.
+   
+
 
 
