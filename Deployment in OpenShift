@@ -45,6 +45,21 @@ spec:
   paused: false 
   revisionHistoryLimit: 2 
   minReadySeconds: 0 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend      
+spec:
+  selector:                  
+    docker-registry: default
+  clusterIP: 172.30.136.123   
+  ports:
+  - nodePort: 0
+    port: 5000               
+    protocol: TCP
+    targetPort: 5000   
+
 > And update the triggers as well inside the yaml, The triggers make sure the application is redployed every time a change is made to my Docker image tagged by the image stream.
   For example when the build job runs and updates my Docker image as a result of a code change. 
 > Once the file ready head back to the OpenShift UI, To create a new deployment configuration.
