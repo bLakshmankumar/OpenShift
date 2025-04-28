@@ -1,0 +1,16 @@
+# What is storage in openshift ?
+================================
+  > In OpenShift (just like Kubernetes), storage refers to persistent storage that is attached to your containers/pods.
+  > Containers are ephemeral by default — if a pod dies, its filesystem is wiped out.
+  > Storage solves this by providing Persistent Volumes (PVs) that survive pod restarts, rescheduling, or failures.
+  > OpenShift manages storage with Kubernetes primitives:
+  > PersistentVolume (PV): Actual storage resource (physical or cloud disk).
+  > PersistentVolumeClaim (PVC): A request by a pod for storage.
+# Why Do We Need Storage? (What Problems It Solves) :
+=====================================================
+               Problem Without Storage	                                                       How Storage Solves It
+     Container files are lost when pod restarts.	                             Persistent storage preserves data across restarts.
+ Stateful apps (like databases) cannot survive failures.	                  Persistent Volumes store DB data safely outside of the pod.
+    Hard to manage storage manually for each app.         	              StorageClasses + PVC automate and simplify storage provisioning.
+      No way to do backups or snapshots easily.	                                  Storage providers support snapshotting volumes.
+Need to scale across multiple storage types (fast, slow, file, block).	      StorageClasses let you define multiple storage backends.
