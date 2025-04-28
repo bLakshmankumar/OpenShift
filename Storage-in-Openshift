@@ -4,8 +4,14 @@
   > Containers are ephemeral by default — if a pod dies, its filesystem is wiped out.
   > Storage solves this by providing Persistent Volumes (PVs) that survive pod restarts, rescheduling, or failures.
   > OpenShift manages storage with Kubernetes primitives:
-  > PersistentVolume (PV): Actual storage resource (physical or cloud disk).
-  > PersistentVolumeClaim (PVC): A request by a pod for storage.
+      > PersistentVolume (PV): Actual storage resource (physical or cloud disk).
+      > PersistentVolumeClaim (PVC): A request by a pod for storage.
+  > Openshift leverages the k8s persistent volume framework to provision storage cluster.
+  > Storage can be provisioned to an openshift cluster using any of the plugins listed here.
+     local, NFS, Azure Disk, AWS ELB, & etc.
+  > The storage added to the OpenShift cluster is available across the cluster as a single large pool of persistent volume resources. 
+  > From these, Each project can claim the required amount of storage.Using PVC's.
+  > This storage can then be used as persistent storage within the pods in each project.
 # Why Do We Need Storage? (What Problems It Solves) :
 =====================================================
                Problem Without Storage	                                                       How Storage Solves It
@@ -14,3 +20,21 @@
     Hard to manage storage manually for each app.         	              StorageClasses + PVC automate and simplify storage provisioning.
       No way to do backups or snapshots easily.	                                  Storage providers support snapshotting volumes.
 Need to scale across multiple storage types (fast, slow, file, block).	      StorageClasses let you define multiple storage backends.
+
+# Process/How to create a storage in OpenShift :
+================================================
+   > To create a storage, Go to OpenShift UI
+   > Go to your project 
+   > Click on "storage" tab from left side menu.
+   > Click on "create a storage" button in the web console.
+   > Fill in the name of the storage claim, And update the access mode.
+        > "Single user mode" allows the volume to be mounted as read/write by single node only. 
+        > The "Shared access mode" allows the volumes to be mounted by multiple nodes.
+        > For read/write access and read-only mode allows the volume to be mounted by multiple nodes, But read only.
+   > Once the access mode is selected, Add a size to create a persistent volume claim.
+   > The created storage can now be attached to pods by adding a volume to the deployment configuration. 
+
+# Demo of storage in OpenShift : 
+================================
+
+ 
