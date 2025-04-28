@@ -34,7 +34,37 @@ Need to scale across multiple storage types (fast, slow, file, block).	      Sto
    > Once the access mode is selected, Add a size to create a persistent volume claim.
    > The created storage can now be attached to pods by adding a volume to the deployment configuration. 
 
-# Demo of storage in OpenShift : 
-================================
+# Where we can see the pods and how we can connect through cli on OpenShift :
+=============================================================================
+   > Open OpenShift UI
+   > Go to your project 
+   > Choose deployments Inside Application tab from left side
+   > Choose your deployment 
+   > Scroll down, You can see list of pods
+  How to connect terminal :
+   > Click on one of the pod
+   > Choose terminal tab
+   > Now you can execute the commands like ls and more.
 
- 
+# Demo of storage in OpenShift [Add persistent storage volume to pods]: 
+=======================================================================
+  > To add a persistent storage volume to pods, We first create a storage
+  > Go to storage tab and clcik on create a storage.
+  >  Fill in the name of the storage claim, And update the access mode.
+        > "Single user mode" allows the volume to be mounted as read/write by single node only. 
+        > The "Shared access mode" allows the volumes to be mounted by multiple nodes.
+        > For read/write access and read-only mode allows the volume to be mounted by multiple nodes, But read only.
+   > Once the access mode is selected, Add a size.
+   > Click on create to create a storage(persistent volume claim).
+   > Once created go to deployment configuration, 
+   > Choose right deployment
+   > Go to configuration tab inside deployment
+   > Scroll down and you can see "Add storage" option under volumes section.
+   > Click on "Add storage" option under vulumes.
+   > Provide the path to mount the volume on the containers, Which happens to be (ex: /data) in our case.
+   > Click on add.
+   > If we no go back to the pod and access the terminal, and execute the (ls -l), We can see a new mount on "/data" .
+   > Now you can create some file with some text content (example : echo "This is test content" > /data/testfile.txt) > Enter
+   > Going back to UI and accessing the application now, We can see the data.
+   > Increase and decrease the pod count and check if the data persists or not.
+   
